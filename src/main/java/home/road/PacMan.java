@@ -159,6 +159,11 @@ public class PacMan extends  JPanel implements ActionListener, KeyListener{
     }
 
     public void move(){
+        if(pico.y == tileSize*9 &&
+                ((pico.direction == 'R' && pico.x == tileSize*19)||
+                        (pico.direction == 'L' && pico.x == 0))){
+            pico.teleportPortal(tileSize);
+        }
         pico.x += pico.velocityX;
         pico.y += pico.velocityY;
         for (Block wall : walls) {
@@ -181,10 +186,15 @@ public class PacMan extends  JPanel implements ActionListener, KeyListener{
             if (ghost.y == tileSize*9 && ghost.direction != 'U' && ghost.direction != 'D') {
                 ghost.updateDirection('U', walls, tileSize);
             }
+            if(ghost.y == tileSize*9 &&
+                    ((ghost.direction == 'R' && ghost.x == tileSize*19)||
+                            (ghost.direction == 'L' && ghost.x == 0))){
+                ghost.teleportPortal(tileSize);
+            }
             ghost.x += ghost.velocityX;
             ghost.y += ghost.velocityY;
             for (Block wall : walls) {
-                if (ghost.collision(wall) || ghost.x <= 0 || ghost.x + ghost.width >= boardWidth) {
+                if (ghost.collision(wall)) {
                     ghost.x -= ghost.velocityX;
                     ghost.y -= ghost.velocityY;
                     char newDirection = directions[random.nextInt(4)];

@@ -55,4 +55,11 @@ public class MovableBlock extends Block{
         this.x = this.startX;
         this.y = this.startY;
     }
+    public void teleportPortal(int tileSize){
+        if (this.x == tileSize*19){
+            this.x = 0;
+        }else {
+            this.x = tileSize*19;
+        }
+    }
 }
